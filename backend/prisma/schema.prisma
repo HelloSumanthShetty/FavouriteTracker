@@ -21,7 +21,6 @@ model Entry {
   location   String
   duration   String
   yearOrTime String
-  details    String?  @db.Text
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
