@@ -5,8 +5,8 @@ export const sampleSchema = z.object({
     .string()
     .min(1, "Title is required")
     .max(100, "Title too long"),
-  type: z.enum(["Movie", "TV Show"], {
-    errorMap: () => ({ message: "Type must be 'Movie' or 'TV Show'" }),
+  type: z.enum(["MOVIE", "TV_SHOW"], {
+      message: "Must be either Movie or TV Show"
   }),
   director: z
     .string()
@@ -15,7 +15,7 @@ export const sampleSchema = z.object({
   budget: z
     .string()
     .regex(/^\$?\d+(M|k|B)?(\/ep)?$/, {
-      message: "Invalid budget format (e.g. $160M or $3M/ep)",
+      message: "Invalid budget format (e.g. $<amount>M or $<amount>M/ep)",
     }),
   location: z
     .string()
@@ -24,11 +24,11 @@ export const sampleSchema = z.object({
   duration: z
     .string()
     .regex(/^\d+\s?min(\/ep)?$/, {
-      message: "Duration must look like '148 min' or '49 min/ep'",
+      message: "Duration must look like '<duration> min' or '<duration> min/ep'",
     }),
   yearOrTime: z
     .string()
     .regex(/^\d{4}(-\d{4})?$/, {
-      message: "Invalid year or range (e.g. 2010 or 2008-2013)",
+      message: "Invalid year or range (e.g. XXXX or XXXX-XXXX)",
     }),
 });
