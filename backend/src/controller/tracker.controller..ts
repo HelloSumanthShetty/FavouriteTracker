@@ -59,12 +59,12 @@ router.post("/", async (req: Request, res: Response): Promise<void | Response> =
   const parse = sampleSchema.safeParse(req.body);
 
   if (!parse.success) {
-    return res.status(400).json({ success: false, error: treeifyError(parse.error) });
+    return res.status(400).json({ success: false, error: parse.error?.flatten().fieldErrors });
   }
   const existingEntry = await prisma.entry.findFirst({ where: { title: parse.data.title } });
-  if (existingEntry) {     
-    return  res.status(409).json({ success: false, error: "An entry with this title already exists." });    
-    }   
+  if (existingEntry) {
+    return res.status(409).json({ success: false, error: "An entry with this title already exists." });
+  }
   try {
     const entry = await prisma.entry.create({ data: parse.data });
     res.status(201).json({ success: true, entry });
@@ -82,7 +82,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void | Response>
 
   const parse = sampleSchema.safeParse(req.body);
   if (!parse.success) {
-    return res.status(400).json({ success: false, error: treeifyError(parse.error) });
+    return res.status(400).json({ success: false, error: parse.error?.flatten().fieldErrors });
   }
 
   try {
