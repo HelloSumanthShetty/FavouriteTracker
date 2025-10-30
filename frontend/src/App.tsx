@@ -1,15 +1,14 @@
 
 import { cn } from '@/lib/utils'
 import HeroSection from '@/components/common/HeroSection';
-import Navbar from '@/components/common/Navbar';
 import './App.css'
 
 function App() {
 
   return (
     <>
-    <div className=' w-full   bg-white dark:bg-black'>
-    <div className="relative  flex min-h-full w-full ">
+    <div className='w-full dark max-h-full bg-white dark:bg-black '>
+    <div className="relative flex min-h-screen w-full ">
       <div
         className={cn(
           "absolute inset-0",
@@ -21,7 +20,7 @@ function App() {
        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-white mask-[radial-gradient(ellipse_at_center,transparent_20%,black)] dark:bg-black">
        </div>
       <div className=" z-10 w-full">
-        <HeroSection />     
+        <HeroSection />
       </div>  
       </div>
     </div>

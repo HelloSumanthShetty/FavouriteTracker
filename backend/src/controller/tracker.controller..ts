@@ -1,18 +1,18 @@
 import express, { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import {sampleSchema } from "../utils/validations/movieSchemaValidation";
-import { treeifyError } from "zod";
+import { regex, treeifyError } from "zod";
 
 const prisma = new PrismaClient();
 const router = express.Router();
 
 router.get("/", async (req: Request, res: Response): Promise<void | Response> => {
-  const limit = Math.min(Number(req.query.limit) || 20, 100);
+  const limit = Math.min(Number(req.query.limit) || 10, 10);
   const cursor = req.query.cursor ? Number(req.query.cursor) : undefined;
 
   try {
     const items = await prisma.entry.findMany({
-      orderBy: { id: "desc" },
+      orderBy: { id: "asc" },
       take: limit + 1,
       ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
     });
@@ -65,6 +65,9 @@ router.post("/", async (req: Request, res: Response): Promise<void | Response> =
   if (existingEntry) {
     return res.status(409).json({ success: false, error: "An entry with this title already exists." });
   }
+  if(parse.data.type==="TV_SHOW" &&   /^\d{4}/.test(parse.data.yearOrTime) ){
+    return res.status(400).json({ success: false, error: "TV_SHOW must have a year range (e.g., 20xx-20xx)." });
+  } 
   try {
     const entry = await prisma.entry.create({ data: parse.data });
     res.status(201).json({ success: true, entry });

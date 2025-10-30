@@ -6,7 +6,7 @@ export const sampleSchema = z.object({
     .min(1, "Title is required")
     .max(100, "Title too long"),
   type: z.enum(["MOVIE", "TV_SHOW"], {
-      message: "Must be either Movie or TV Show"
+      message: "Must be either MOVIE or TV_SHOW"
   }),
   director: z
     .string()

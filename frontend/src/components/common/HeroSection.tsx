@@ -1,11 +1,11 @@
 
 import { motion } from "motion/react";
-import Navbar from "./Navbar";
+import TrackerNavbar from "./TrackerNavbar";
 import TableComponent from "./Table";
 export function HeroSection() {
   return (
     <>
-      <Navbar />
+      <TrackerNavbar />
     <div className=" mx-auto my-10 flex max-w-7xl flex-col items-center justify-center">
       <div className="absolute inset-y-0 left-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
         <div className="absolute top-0 h-40 w-px " />
@@ -16,9 +16,9 @@ export function HeroSection() {
       <div className="absolute inset-x-0 bottom-0 h-px w-full bg-neutral-200/80 dark:bg-neutral-800/80">
         <div className="absolute mx-auto h-px w-40 " />
       </div>
-      <div className="px-4 py-10 md:py-20">
-        <h1 className="relative z-10 mx-auto max-w-4xl text-center text-2xl font-bold text-slate-700 md:text-4xl lg:text-7xl dark:text-slate-300">
-          {"Launch your website in hours, not days"
+      <div className="px-4 py-5 md:py-15">
+        <h1 className="relative z-10 mx-auto max-w-4xl  text-center text-2xl font-bold text-slate-700 md:text-4xl lg:text-7xl dark:text-slate-300">
+          {"Track Your Favorite Movies & TV Shows Effortlessly"
             .split(" ")
             .map((word, index) => (
               <motion.span
@@ -48,10 +48,9 @@ export function HeroSection() {
             delay: 0.8,
           }}
           className="relative z-10 mx-auto max-w-xl py-4 text-center text-lg font-normal text-neutral-600 dark:text-neutral-400"
-        >
-          With AI, you can launch your website in hours, not days. Try our best
-          in class, state of the art, cutting edge AI tools to get your website
-          up.
+        > 
+        FavoriteTracker helps you organize, explore, and keep tabs on all your
+        favorite shows and films — from timeless classics to the latest releases.
         </motion.p>
         <motion.div
           initial={{
