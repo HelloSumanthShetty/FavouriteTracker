@@ -1,16 +1,12 @@
-
-import React, { useEffect } from 'react'
+import React from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-
 
 const API_URL = import.meta.env.VITE_API_URL;
 axios.defaults.baseURL = API_URL;
 
 
 const Login = () => {
-   const navigate=useNavigate()
    const [state, setState] = React.useState("login");
    const [token, setToken] = React.useState(localStorage.getItem("token") || "")
     const [name, setName] = React.useState("");
@@ -32,7 +28,7 @@ const Login = () => {
             }
         }
         catch (error:any) {
-            console.error("Error:", error);
+            console.error("Error:", error, token);
             toast.error("Something went wrong");
         }
     }; 
