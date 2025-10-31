@@ -19,7 +19,6 @@ import {
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import EditButton from "./EditButton";
-import { useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
 import { ChevronDown } from "lucide-react";
