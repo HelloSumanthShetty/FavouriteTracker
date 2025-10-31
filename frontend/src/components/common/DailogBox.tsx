@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL;
 axios.defaults.baseURL = API_URL;
@@ -135,9 +136,12 @@ export function DialogDemo() {
 
     const validation = validate(payload);
     const hasErrors = Object.values(validation).some(Boolean);
+    if (hasErrors) {
+      toast.error("Please fix the errors before submitting.");
     setErrors(validation);
-    if (hasErrors) return;
-
+    setLoading(false);
+    return;
+  }
 
     try {
       const apiPayload = {
@@ -163,7 +167,7 @@ export function DialogDemo() {
     <Dialog open={open} onOpenChange={setOpen} >  
       <form  className="mt-3">
         <DialogTrigger asChild>
-          <Button variant="outline">Open Dialog</Button>
+          <Button className="dark:text-white" variant="outline">Add Show</Button>
         </DialogTrigger>
 
         <DialogContent className="sm:max-w-[600px] overflow-y-auto h-auto  max-h-[95vh]">

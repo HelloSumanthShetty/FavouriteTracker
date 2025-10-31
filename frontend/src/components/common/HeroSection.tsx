@@ -3,10 +3,12 @@ import { motion } from "motion/react";
 import TrackerNavbar from "./TrackerNavbar";
 import TableComponent from "./Table";
 import DialogDemo from "./DailogBox";
-export function HeroSection() {
+
+
+export function HeroSection({ theme, setTheme }: { theme: string; setTheme: (theme: string) => void }) {
   return (
     <>
-      <TrackerNavbar />
+      <TrackerNavbar theme={theme} setTheme={setTheme} />
     <div className=" mx-auto overflow-hidden my-10 flex max-w-7xl flex-col items-center justify-center">
       <div className="absolute inset-y-0 left-0 h-full w-px bg-neutral-200/80 dark:bg-neutral-800/80">
         <div className="absolute top-0 h-40 w-px " />

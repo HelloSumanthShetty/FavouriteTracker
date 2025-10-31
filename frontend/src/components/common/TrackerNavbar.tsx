@@ -9,9 +9,12 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { useState } from "react";
+import { Sun,Moon } from "lucide-react";
 
-const TrackerNavbar = () => {
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+
+const TrackerNavbar = ({ theme, setTheme }: { theme: string; setTheme: (theme: string) => void }) => {
    const navItems = [
     {
       name: "Features",
@@ -36,8 +39,10 @@ const TrackerNavbar = () => {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary">Login</NavbarButton>
-            <NavbarButton variant="primary">Book a call</NavbarButton>
+            <NavbarButton variant="secondary" onClick={() => {setTheme(theme === "dark" ? "light" : "dark"); toast.success(`Switched to ${theme === "dark" ? "Light" : "Dark"} Mode`);}}>
+              {theme === "dark" ? <Sun /> : <Moon />}
+            </NavbarButton>
+            <NavbarButton variant="primary">Login</NavbarButton>
           </div>
         </NavBody>
  
@@ -66,6 +71,7 @@ const TrackerNavbar = () => {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
+              <img src="" alt="" />
               <NavbarButton
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
