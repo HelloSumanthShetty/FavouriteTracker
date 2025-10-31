@@ -14,12 +14,12 @@ const Login = () => {
    const [state, setState] = React.useState("login");
    const [token, setToken] = React.useState(localStorage.getItem("token") || "")
     const [name, setName] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    const [email, setEmail] = React.useState("Dummyemail@gmail.com");
+    const [password, setPassword] = React.useState("DummyPassword");
 
     const handleSubmit = async (e: React.FormEvent) => {  
         e.preventDefault();
-        const endpoint = state === "login" ? "/users/login" : "/users/register";
+        const endpoint = state === "login" ? "/users/login" : "/users/null";
         const payload = state === "login" ? { email, password } : { name, email, password };
         try {
             const response = await axios.post(endpoint, payload, { withCredentials: true });
