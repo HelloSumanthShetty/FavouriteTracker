@@ -10,7 +10,7 @@ async function main() {
     await prisma.entry.create({
       data: {
         title: faker.commerce.productName(),
-        type: faker.helpers.arrayElement(["MOVIE", "TV_SHOW"]),
+        type: faker.helpers.arrayElement(["MOVIE"]),
         director: faker.person.fullName(),
         budget: `$${faker.number.int({ min: 10, max: 500 })}M`,
         location: faker.location.city(),

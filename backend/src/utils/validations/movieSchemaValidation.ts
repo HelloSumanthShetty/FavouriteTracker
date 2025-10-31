@@ -29,6 +29,6 @@ export const sampleSchema = z.object({
   yearOrTime: z
     .string()
     .regex(/^\d{4}(-\d{4})?$/, {
-      message: "Invalid year or range (e.g. XXXX or XXXX-XXXX)",
+      message: "Invalid year or range (e.g. YYYY or YYYY-YYYY)",
     }),
 });

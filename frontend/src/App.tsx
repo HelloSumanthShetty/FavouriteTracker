@@ -8,7 +8,7 @@ function App() {
   return (
     <>
     <div className='w-full dark max-h-full bg-white dark:bg-black '>
-    <div className="relative flex min-h-screen w-full ">
+    <div className="relative  flex min-h-screen w-full ">
       <div
         className={cn(
           "absolute inset-0",

@@ -65,8 +65,8 @@ router.post("/", async (req: Request, res: Response): Promise<void | Response> =
   if (existingEntry) {
     return res.status(409).json({ success: false, error: "An entry with this title already exists." });
   }
-  if(parse.data.type==="TV_SHOW" &&   /^\d{4}/.test(parse.data.yearOrTime) ){
-    return res.status(400).json({ success: false, error: "TV_SHOW must have a year range (e.g., 20xx-20xx)." });
+  if(parse.data.type==="TV_SHOW" && !/^\d{4}-\d{4}$/.test(parse.data.yearOrTime) ){
+    return res.status(400).json({ success: false, error: "TV_SHOW must have a year range (e.g. YYYY-YYYY)." });
   } 
   try {
     const entry = await prisma.entry.create({ data: parse.data });
