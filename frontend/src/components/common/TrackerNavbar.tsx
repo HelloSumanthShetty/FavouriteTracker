@@ -45,8 +45,6 @@ const TrackerNavbar = ({ theme, setTheme }: { theme: string; setTheme: (theme: s
             <NavbarButton variant="primary">Login</NavbarButton>
           </div>
         </NavBody>
- 
-        {/* Mobile Navigation */}
         <MobileNav>
           <MobileNavHeader>
             <NavbarLogo />
@@ -90,8 +88,6 @@ const TrackerNavbar = ({ theme, setTheme }: { theme: string; setTheme: (theme: s
           </MobileNavMenu>
         </MobileNav>
       </NavbarT>
- 
-      {/* Navbar */}
     </div>
   );
 }

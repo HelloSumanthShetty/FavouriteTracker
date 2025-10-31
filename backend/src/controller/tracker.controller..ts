@@ -1,12 +1,11 @@
 import express, { Request, Response, NextFunction } from "express";
 import { PrismaClient } from "@prisma/client";
 import {sampleSchema } from "../utils/validations/movieSchemaValidation";
-import { regex, treeifyError } from "zod";
-
+import {verifyToken} from "../middleware/verifyToken"
 const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get("/", async (req: Request, res: Response): Promise<void | Response> => {
+router.get("/", verifyToken, async (req: Request, res: Response): Promise<void | Response> => {
   const limit = Math.min(Number(req.query.limit) || 10, 10);
   const cursor = req.query.cursor ? Number(req.query.cursor) : undefined;
 
@@ -30,7 +29,7 @@ router.get("/", async (req: Request, res: Response): Promise<void | Response> =>
 });
 
 
-router.get("/:id", async (req: Request, res: Response): Promise<void | Response> => {
+router.get("/:id", verifyToken, async (req: Request, res: Response): Promise<void | Response> => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
     return res.status(400).json({ success: false, error: "Invalid ID" });
@@ -55,7 +54,7 @@ router.get("/:id", async (req: Request, res: Response): Promise<void | Response>
 
 
 
-router.post("/", async (req: Request, res: Response): Promise<void | Response> => {
+router.post("/", verifyToken, async (req: Request, res: Response): Promise<void | Response> => {
   const parse = sampleSchema.safeParse(req.body);
 
   if (!parse.success) {
@@ -77,7 +76,7 @@ router.post("/", async (req: Request, res: Response): Promise<void | Response> =
   }
 });
 
-router.put("/:id", async (req: Request, res: Response): Promise<void | Response> => {
+router.put("/:id", verifyToken, async (req: Request, res: Response): Promise<void | Response> => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
     return res.status(400).json({ success: false, error: "Invalid ID" });
@@ -104,7 +103,7 @@ router.put("/:id", async (req: Request, res: Response): Promise<void | Response>
   }
 });
 
-router.delete("/:id", async (req: Request, res: Response): Promise<void | Response> => {
+router.delete("/:id", verifyToken, async (req: Request, res: Response): Promise<void | Response> => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
     return res.status(400).json({ success: false, error: "Invalid ID" });

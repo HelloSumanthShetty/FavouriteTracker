@@ -2,10 +2,10 @@
 import { motion } from "motion/react";
 import TrackerNavbar from "./TrackerNavbar";
 import TableComponent from "./Table";
-import DialogDemo from "./DailogBox";
-
 
 export function HeroSection({ theme, setTheme }: { theme: string; setTheme: (theme: string) => void }) {
+ 
+  window.scrollTo(0,10)
   return (
     <>
       <TrackerNavbar theme={theme} setTheme={setTheme} />
@@ -90,10 +90,9 @@ export function HeroSection({ theme, setTheme }: { theme: string; setTheme: (the
           }}
           className="relative z-10 mt-20 mx-auto max-md:w-[60%] max-sm:w-[50%] rounded-3xl border border-neutral-200 bg-neutral-100 p-4 shadow-md dark:border-neutral-800 dark:bg-neutral-900"
         >
-          <div>
-            <TableComponent />
-          <DialogDemo />
-          </div>
+          
+            <TableComponent  />
+          
         </motion.div>
       </div>
     </div>

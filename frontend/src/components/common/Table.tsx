@@ -19,10 +19,11 @@ import {
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import EditButton from "./EditButton";
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import { Input } from "../ui/input";
-import { ChevronDown, MoreHorizontal, Search } from "lucide-react";
-
+import { ChevronDown } from "lucide-react";
+import DialogDemo from "./DailogBox";
 const API_URL = import.meta.env.VITE_API_URL;
 axios.defaults.baseURL = API_URL;
 
@@ -46,6 +47,7 @@ const TableComponent = () => {
   const [limit] = useState<number>(10);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const fetchedFirstRef = useRef(false);
+
   const fetchEntries = async (append = false, cursor?: number | null): Promise<void> => {
     if (loading) return;
     setLoading(true);
@@ -53,7 +55,7 @@ const TableComponent = () => {
       const params: any = { limit };
       if (typeof cursor === "number") params.cursor = cursor;
 
-      const response = await axios.get("/entries", { params });
+      const response = await axios.get("/entries", { params, withCredentials: true });
       const res = response.data;
 
       if (res?.success) {
@@ -61,9 +63,14 @@ const TableComponent = () => {
         setEntries(prev => (append ? [...prev, ...res.items] : res.items));
       } else {
         console.error("Unexpected API response shape:", res);
+
       }
 
-    } catch (error) {
+    } catch (error : any ) {
+      if(error.response?.data?.cookies===false){
+        localStorage.removeItem("token");
+        window.location.reload()
+      }
       console.error("Error fetching entries:", error);
     } finally {
       setLoading(false);
@@ -75,6 +82,7 @@ const TableComponent = () => {
       fetchedFirstRef.current = true;
       fetchEntries(false, undefined);
     }
+    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -163,7 +171,7 @@ const TableComponent = () => {
                   type: entry.type === "TV_SHOW" ? "TV_SHOW" : "MOVIE",
                   duration: entry.duration.split(" ")[0] || "",
                   durationUnit: entry.duration.includes("min/ep") ? "min/ep" : "min",
-                }} />
+                }} fetchEntries={fetchEntries} />
               </TableCell>
               <TableCell>
                 <Button className="hover:scale-101 bg-red-700 hover:bg-rose-500 dark:bg-red-800" onClick={() => handleDelete(entry.id)}>Delete</Button>
@@ -176,6 +184,9 @@ const TableComponent = () => {
       {loading && (
         <p className="p-4 text-center text-gray-500">Loading more...</p>
       )}
+    </div>
+    <div className="py-2">
+      <DialogDemo  fetchEntries={fetchEntries} />
     </div>
     </>
   );

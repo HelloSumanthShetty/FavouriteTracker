@@ -86,10 +86,11 @@ function validate(form: EntryForm) {
 
         }
     }
+    toast.error("Failed to save. Try again.");
     return errs;
 }
 
-export function EditButton({ editForm }: { editForm: EntryForm }) {
+export function EditButton({ editForm, fetchEntries }: { editForm: EntryForm ; fetchEntries: () => void }) {
     const [open, setOpen] = useState(false);
     const [form, setForm] = useState<EntryForm>(editForm);
     const [errors, setErrors] = useState<Record<string, string | null>>({});
@@ -130,7 +131,7 @@ export function EditButton({ editForm }: { editForm: EntryForm }) {
         setErrors((prev) => ({ ...prev, duration: null }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async () => {
         setLoading(true);
         const payload: EntryForm = {
             ...form,
@@ -157,10 +158,17 @@ export function EditButton({ editForm }: { editForm: EntryForm }) {
                 duration: `${payload.duration} ${payload.durationUnit}`,
                 yearOrTime: payload.yearOrTime,
             };
-            await axios.put(`/entries/${editForm?.id}`, apiPayload);
+            await axios.put(`/entries/${editForm?.id}`, apiPayload, { withCredentials: true });
+            toast.success("Entry updated successfully.");
             setOpen(false);
-        } catch (err) {
-            console.error("Error submitting form:", err);
+            fetchEntries();
+        } catch (error :any) {
+            if(error.response?.data?.cookies===false){
+        localStorage.removeItem("token");
+        window.location.reload()
+      }
+            toast.error("Failed to save. Try again.");
+            console.error("Error submitting form:", error);
             setErrors((prev) => ({ ...prev, title: "Failed to save. Try again." }));
         } finally {
             setLoading(false);

@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "react-hot-toast";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL ;
 axios.defaults.baseURL = API_URL;
 
 type EntryForm = {
@@ -89,7 +89,7 @@ function validate(form: EntryForm) {
   return errs;
 }
 
-export function DialogDemo() {
+export function DialogDemo({ fetchEntries }: { fetchEntries: () => void }) {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<EntryForm>(initialData);
   const [errors, setErrors] = useState<Record<string, string | null>>({});
@@ -127,7 +127,7 @@ export function DialogDemo() {
     setErrors((prev) => ({ ...prev, duration: null }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async () => {
     setLoading(true);
     const payload: EntryForm = {
       ...form,
@@ -153,10 +153,16 @@ export function DialogDemo() {
         duration: `${payload.duration} ${payload.durationUnit}`,
         yearOrTime: payload.yearOrTime,
       };
-      await axios.post("/entries", apiPayload);
+      await axios.post("/entries", apiPayload, { withCredentials: true });
       setOpen(false);
-    } catch (err) {
-      console.error("Error submitting form:", err);
+      toast.success("Entry added successfully!");
+      fetchEntries();
+    } catch (error :any) {
+      if(error.response?.data?.cookies===false){
+        localStorage.removeItem("token");
+        window.location.reload()
+      }
+      console.error("Error submitting form:", error);
       setErrors((prev) => ({ ...prev, title: "Failed to save. Try again." }));
     } finally {
       setLoading(false);
