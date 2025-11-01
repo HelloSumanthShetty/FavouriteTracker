@@ -3,7 +3,7 @@
 A full-stack web application to manage a list of favourite movies and TV shows. Users can add, view (in an infinite-scroll table), edit, and delete entries. Each entry captures detailed information: Title, Type (Movie / TV Show), Director, Budget, Location, Duration or Year/Time.
 
 Live deployment
-- Deployed on Render: https://favourite-tracker-l9wbe3f92-hellosumanthshettys-projects.vercel.app/
+- Deployed on Render: https://favourite-tracker.vercel.app/
 
 Table of contents
 - About
