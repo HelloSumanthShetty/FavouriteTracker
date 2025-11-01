@@ -27,7 +27,7 @@ const Login = () => {
                 setToken(data.token);
                 toast.success(data.msg);
                 window.location.reload();
-                navigate("/home");
+                navigate("/");
             }
         }
         catch (error:any) {
