@@ -1,18 +1,20 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL;
 axios.defaults.baseURL = API_URL;
 
 
 const Login = () => {
+    const navigate = useNavigate();
    const [state, setState] = React.useState("login");
    const [token, setToken] = React.useState(localStorage.getItem("token") || "")
     const [name, setName] = React.useState("");
     const [email, setEmail] = React.useState("Dummyemail@gmail.com");
     const [password, setPassword] = React.useState("DummyPassword");
-
+ 
     const handleSubmit = async (e: React.FormEvent) => {  
         e.preventDefault();
         const endpoint = state === "login" ? "/api/users/login" : "/users/null";
@@ -25,6 +27,7 @@ const Login = () => {
                 setToken(data.token);
                 toast.success(data.msg);
                 window.location.reload();
+                navigate("/home");
             }
         }
         catch (error:any) {
