@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 router.get("/", verifyToken, async (req: Request, res: Response): Promise<void | Response> => {
-  const limit = Math.min(Number(req.query.limit) || 10, 10);
+  const limit = Math.min(Number(req.query.limit) || 10, 200);
   const cursor = req.query.cursor ? Number(req.query.cursor) : undefined;
 
   try {

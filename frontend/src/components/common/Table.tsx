@@ -43,10 +43,10 @@ const TableComponent = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [nextCursor, setNextCursor] = useState<number | null>(null);
   const [searchType, setSearchType] = useState<string>("title");
-  const [limit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(20);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const fetchedFirstRef = useRef(false);
-
+  let scrollHeight  =100;
   const fetchEntries = async (append = false, cursor?: number | null): Promise<void> => {
     if (loading) return;
     setLoading(true);
@@ -81,15 +81,16 @@ const TableComponent = () => {
       fetchedFirstRef.current = true;
       fetchEntries(false, undefined);
     }
-    containerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  }, [searchTerm]);
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    const nearBottom = scrollTop + clientHeight >= scrollHeight - 100;
+    const nearBottom = scrollTop + clientHeight >= scrollHeight - 120;
 
-    if (nearBottom && !loading && nextCursor) {
+    if (!loading && nextCursor && nearBottom) {
       fetchEntries(true, nextCursor);
+      setLimit((prev) => prev + limit);
+      console.log(limit)
     }
   };
 
@@ -133,7 +134,7 @@ const TableComponent = () => {
     <div
       ref={containerRef}
       onScroll={handleScroll}
-      className={`overflow-y-auto w-full h-auto max-h-[550px]  `}
+      className={`overflow-y-auto w-full max-h-[550px]  `}
     >
       <Table >
         <TableCaption  >{entries.length > 0 ? `A list of your favorite entries.` : `Add you Favorites TV and MOVIES`}</TableCaption>
