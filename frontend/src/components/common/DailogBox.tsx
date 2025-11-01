@@ -153,7 +153,7 @@ export function DialogDemo({ fetchEntries }: { fetchEntries: () => void }) {
         duration: `${payload.duration} ${payload.durationUnit}`,
         yearOrTime: payload.yearOrTime,
       };
-      await axios.post("/entries", apiPayload, { withCredentials: true });
+      await axios.post("/api/entries", apiPayload, { withCredentials: true });
       setOpen(false);
       toast.success("Entry added successfully!");
       fetchEntries();

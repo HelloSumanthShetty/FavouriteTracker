@@ -158,7 +158,7 @@ export function EditButton({ editForm, fetchEntries }: { editForm: EntryForm ; f
                 duration: `${payload.duration} ${payload.durationUnit}`,
                 yearOrTime: payload.yearOrTime,
             };
-            await axios.put(`/entries/${editForm?.id}`, apiPayload, { withCredentials: true });
+            await axios.put(`/api/entries/${editForm?.id}`, apiPayload, { withCredentials: true });
             toast.success("Entry updated successfully.");
             setOpen(false);
             fetchEntries();

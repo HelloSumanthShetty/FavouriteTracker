@@ -15,7 +15,7 @@ const Login = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {  
         e.preventDefault();
-        const endpoint = state === "login" ? "/users/login" : "/users/null";
+        const endpoint = state === "login" ? "/api/users/login" : "/users/null";
         const payload = state === "login" ? { email, password } : { name, email, password };
         try {
             const response = await axios.post(endpoint, payload, { withCredentials: true });

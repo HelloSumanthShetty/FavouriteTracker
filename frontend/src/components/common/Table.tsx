@@ -54,7 +54,7 @@ const TableComponent = () => {
       const params: any = { limit };
       if (typeof cursor === "number") params.cursor = cursor;
 
-      const response = await axios.get("/entries", { params, withCredentials: true });
+      const response = await axios.get("/api/entries", { params, withCredentials: true });
       const res = response.data;
 
       if (res?.success) {
@@ -98,7 +98,7 @@ const TableComponent = () => {
       const confirmed = window.confirm("Are you sure you want to delete this entry?");
       if (!confirmed) return;
 
-      await axios.delete(`/entries/${id}`);
+      await axios.delete(`/api/entries/${id}`);
       setEntries((prev) => prev.filter((entry) => entry.id !== id));
     } catch (error) {
       console.error("Error deleting entry:", error);
