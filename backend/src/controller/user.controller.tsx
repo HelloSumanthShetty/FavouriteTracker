@@ -121,12 +121,12 @@ router.post("/login", async (req: Request, res: Response) => {
 });
 
 
-router.post("/logout/:userId", async (req: Request, res: Response) => {
+router.post("/logout", async (req: Request, res: Response) => {
   try {
-    const { userId } = req.params;
-    if (!userId) return res.status(400).json({ success: false, msg: "User ID is required" });
-    const findUser = await prisma.user.findUnique({ where: { id: userId } });
-    if (!findUser) return res.status(404).json({ success: false, msg: "User not found" });
+    // const { userId } = req.params;
+    // if (!userId) return res.status(400).json({ success: false, msg: "User ID is required" });
+    // const findUser = await prisma.user.findUnique({ where: { id: userId } });
+    // if (!findUser) return res.status(404).json({ success: false, msg: "User not found" });
     res.clearCookie("token");
     res.status(200).json({ success: true, msg: "User logged out successfully" });
   } catch (error: any) {

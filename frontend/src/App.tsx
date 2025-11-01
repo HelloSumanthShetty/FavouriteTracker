@@ -40,7 +40,7 @@ function App() {
           <div className=" z-10 w-full">
             <Routes>
               <Route path="/" element={token ? <HeroSection theme={theme} setTheme={settheme} /> : <Navigate to="/auth" />} />
-              <Route path="/auth" element={token ? <Navigate to="/" /> : <Login />} />
+              <Route path="/auth" element={token ? <Navigate to="/" /> : <Login  />} />
                 <Route path="*" element={<Navigate to={token! ?  "/auth":"/"} />} />
             </Routes>
           </div>

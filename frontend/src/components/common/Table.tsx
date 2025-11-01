@@ -46,7 +46,6 @@ const TableComponent = () => {
   const [limit, setLimit] = useState<number>(20);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const fetchedFirstRef = useRef(false);
-  let scrollHeight  =100;
   const fetchEntries = async (append = false, cursor?: number | null): Promise<void> => {
     if (loading) return;
     setLoading(true);
