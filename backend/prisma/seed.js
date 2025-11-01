@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
   console.log(" Seeding database...");
 
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 60; i++) {
     await prisma.entry.create({
       data: {
         title: faker.commerce.productName(),
